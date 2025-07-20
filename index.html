@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uruguay RENAPER - Búsqueda Oficial</title>
-    <!-- Incluye Tailwind CSS para un estilo moderno y minimalista -->
+    <title>dgrec@kerojuro</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Fuente Inter para una estética limpia y moderna -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos generales para el cuerpo de la página */
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; /* Fondo gris claro */
-            color: #333; /* Texto oscuro */
+            background-color: #f0f2f5; 
+            color: #333; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,32 +19,32 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        /* Contenedor principal de la aplicación */
+
         .container {
             background-color: #ffffff;
-            border-radius: 16px; /* Bordes redondeados */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
             padding: 40px;
             max-width: 800px;
             width: 100%;
-            border: 1px solid #e0e0e0; /* Borde sutil */
+            border: 1px solid #e0e0e0; 
         }
-        /* Estilos del encabezado */
+
         .header {
             text-align: center;
             margin-bottom: 30px;
             position: relative;
         }
-        /* Estilos para el logo que actúa como título */
+
         .logo {
             display: block;
-            margin: 0 auto 30px auto; /* Centra el logo y añade margen inferior */
-            max-width: 945px; /* Ajusta al ancho del logo */
-            width: 100%; /* Asegura que sea responsivo */
+            margin: 0 auto 30px auto; 
+            max-width: 945px; 
+            width: 100%; 
             height: auto;
-            border-radius: 8px; /* Bordes redondeados para el logo */
+            border-radius: 8px; 
         }
-        /* Estilos para los grupos de entrada (label e input) */
+
         .input-group label {
             font-weight: 600;
             color: #444;
@@ -60,15 +58,15 @@
             border-radius: 8px;
             font-size: 1rem;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            outline: none; /* Elimina el contorno por defecto al enfocar */
+            outline: none; 
         }
         .input-group input:focus {
-            border-color: #004080; /* Borde azul al enfocar */
-            box-shadow: 0 0 0 3px rgba(0, 64, 128, 0.2); /* Sombra de enfoque sutil azul */
+            border-color: #004080; 
+            box-shadow: 0 0 0 3px rgba(0, 64, 128, 0.2); 
         }
-        /* Estilos del botón de búsqueda */
+
         .search-button {
-            background-color: #004080; /* Botón azul oscuro */
+            background-color: #004080; 
             color: white;
             padding: 14px 25px;
             border-radius: 8px;
@@ -76,25 +74,24 @@
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 64, 128, 0.3); /* Sombra para el botón azul */
+            box-shadow: 0 4px 10px rgba(0, 64, 128, 0.3); 
         }
         .search-button:hover {
-            background-color: #002b55; /* Azul más oscuro al pasar el ratón */
-            transform: translateY(-2px); /* Efecto de elevación */
+            background-color: #002b55; 
+            transform: translateY(-2px); 
         }
         .search-button:active {
-            transform: translateY(0); /* Vuelve a la posición original al hacer clic */
+            transform: translateY(0); 
         }
 
-        /* Animación de carga (spinner) */
         .loader {
-            border: 6px solid #f3f3f3; /* Gris claro */
-            border-top: 6px solid #004080; /* Azul oscuro para el spinner */
+            border: 6px solid #f3f3f3; 
+            border-top: 6px solid #004080; 
             border-radius: 50%;
             width: 40px;
             height: 40px;
-            animation: spin 1s linear infinite; /* Animación de giro */
-            display: none; /* Oculto por defecto */
+            animation: spin 1s linear infinite; 
+            display: none; 
             margin: 20px auto;
         }
         @keyframes spin {
@@ -102,16 +99,15 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Área de resultados */
         .results-container {
             margin-top: 30px;
-            border-top: 1px solid #e0e0e0; /* Separador superior */
+            border-top: 1px solid #e0e0e0; 
             padding-top: 20px;
         }
         .results-container h2 {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #004080; /* Azul oscuro para el título de resultados */
+            color: #004080; 
             margin-bottom: 20px;
             text-align: center;
         }
@@ -130,51 +126,50 @@
             background-color: #f0f0f0;
         }
         .result-item strong {
-            color: #004080; /* Azul para las etiquetas de los resultados */
+            color: #004080; 
         }
         .no-results {
             text-align: center;
-            color: #2196F3; /* Azul para el mensaje de no resultados */
+            color: #2196F3; 
             font-weight: 600;
             margin-top: 20px;
             font-size: 1.1rem;
         }
-        /* Pie de página */
+
         .footer {
             text-align: center;
             margin-top: 40px;
             font-size: 0.9rem;
             color: #777;
         }
-        /* Mensaje de error */
+
         .error-message {
-            color: #2196F3; /* Azul para el mensaje de error */
+            color: #2196F3; 
             font-weight: 600;
             text-align: center;
             margin-top: 15px;
         }
 
-        /* Optimización para dispositivos móviles (menos de 768px de ancho) */
         @media (max-width: 767px) {
             .container {
-                padding: 20px; /* Reduce el padding en pantallas pequeñas */
+                padding: 20px; 
             }
             .logo {
-                max-width: 100%; /* Asegura que el logo se ajuste al ancho de la pantalla */
+                max-width: 100%; 
                 margin-bottom: 20px;
             }
             .header h1 {
-                font-size: 2rem; /* Reduce el tamaño del título principal */
+                font-size: 2rem; 
             }
             .header p {
-                font-size: 1rem; /* Reduce el tamaño del texto del encabezado */
+                font-size: 1rem; 
             }
             .input-group input, .search-button {
-                font-size: 0.95rem; /* Ajusta el tamaño de la fuente de los inputs y botón */
-                padding: 10px 15px; /* Ajusta el padding de los inputs y botón */
+                font-size: 0.95rem; 
+                padding: 10px 15px; 
             }
             .results-container h2 {
-                font-size: 1.5rem; /* Reduce el tamaño del título de resultados */
+                font-size: 1.5rem; 
             }
         }
     </style>
@@ -182,7 +177,6 @@
 <body>
     <div class="container">
         <header class="header">
-            <!-- Logo ahora actúa como el título principal -->
             <img src="logo.png" alt="Logo Oficial RENAPER" class="logo">
         </header>
 
@@ -204,25 +198,20 @@
 
             <div class="flex justify-center mb-8">
                 <button id="searchButton" class="search-button">
-                    <!-- Icono de lupa de Font Awesome (o similar, aquí un SVG genérico) -->
                     <svg class="w-5 h-5 inline-block mr-2 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     Buscar Registro
                 </button>
             </div>
 
-            <!-- Animación de carga -->
             <div id="loadingAnimation" class="loader"></div>
-            <!-- Mensaje de error -->
             <div id="errorMessage" class="error-message hidden"></div>
 
-            <!-- Sección de resultados -->
             <section id="resultsSection" class="results-container hidden">
                 <h2>Resultados de la Búsqueda</h2>
                 <div id="resultsList" class="space-y-4">
-                    <!-- Los resultados se inyectarán aquí dinámicamente -->
                 </div>
                 <div id="noResults" class="no-results hidden">
-                    No se encontraron coincidencias con los criterios de búsqueda.
+                    No se encontraron resultados.
                 </div>
             </section>
         </main>
@@ -233,7 +222,7 @@
     </div>
 
     <script>
-        // Obtención de referencias a elementos del DOM
+
         const nombreInput = document.getElementById('nombre');
         const apellidoInput = document.getElementById('apellido');
         const cedulaInput = document.getElementById('cedula');
@@ -244,75 +233,66 @@
         const noResults = document.getElementById('noResults');
         const errorMessage = document.getElementById('errorMessage');
 
-        // URL base de tu servidor Flask
-        const API_URL = 'http://127.0.0.1:5000'; // Asegúrate de que coincida con la dirección de tu servidor Flask
+        const API_URL = 'http://127.0.0.1:5000'; 
 
-        // Función para mostrar la animación de carga
         function showLoading() {
             loadingAnimation.style.display = 'block';
-            resultsSection.classList.add('hidden'); // Oculta la sección de resultados
-            noResults.classList.add('hidden'); // Oculta el mensaje de no resultados
-            errorMessage.classList.add('hidden'); // Oculta cualquier mensaje de error previo
-            searchButton.disabled = true; // Deshabilita el botón de búsqueda
-            searchButton.classList.add('opacity-50', 'cursor-not-allowed'); // Estilo de deshabilitado
+            resultsSection.classList.add('hidden'); 
+            noResults.classList.add('hidden'); 
+            errorMessage.classList.add('hidden'); 
+            searchButton.disabled = true; 
+            searchButton.classList.add('opacity-50', 'cursor-not-allowed'); 
         }
 
-        // Función para ocultar la animación de carga
         function hideLoading() {
             loadingAnimation.style.display = 'none';
-            searchButton.disabled = false; // Habilita el botón de búsqueda
-            searchButton.classList.remove('opacity-50', 'cursor-not-allowed'); // Restaura el estilo del botón
+            searchButton.disabled = false; 
+            searchButton.classList.remove('opacity-50', 'cursor-not-allowed'); 
         }
 
-        // Función para mostrar un mensaje de error
         function displayError(message) {
             errorMessage.textContent = message;
             errorMessage.classList.remove('hidden');
         }
 
-        // Función para limpiar los resultados anteriores
         function clearResults() {
-            resultsList.innerHTML = ''; // Limpia la lista de resultados
+            resultsList.innerHTML = ''; 
             resultsSection.classList.add('hidden');
             noResults.classList.add('hidden');
             errorMessage.classList.add('hidden');
         }
 
-        // Función principal de búsqueda, se ejecuta al hacer clic en el botón
         searchButton.addEventListener('click', async () => {
-            clearResults(); // Limpia resultados y mensajes anteriores
-            showLoading(); // Muestra la animación de carga
+            clearResults(); 
+            showLoading(); 
 
             const nombre = nombreInput.value.trim();
             const apellido = apellidoInput.value.trim();
             const cedula = cedulaInput.value.trim();
 
-            // Validación básica: al menos un campo debe estar lleno
             if (!nombre && !apellido && !cedula) {
-                displayError('Por favor, ingrese al menos un criterio de búsqueda (Nombre, Apellido o Cédula).');
+                displayError('Usa al menos un criterio de búsqueda.');
                 hideLoading();
                 return;
             }
 
             try {
-                // Realiza la solicitud POST al servidor Python
+
                 const response = await fetch(`${API_URL}/search`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ nombre, apellido, cedula }), // Envía los datos de los campos
+                    body: JSON.stringify({ nombre, apellido, cedula }), 
                 });
 
-                // Verifica si la respuesta fue exitosa
                 if (!response.ok) {
                     throw new Error(`Error HTTP! estado: ${response.status}`);
                 }
 
-                const data = await response.json(); // Parsea la respuesta JSON
+                const data = await response.json(); 
                 const results = data.results;
 
-                // Muestra los resultados o el mensaje de no coincidencias
                 if (results && results.length > 0) {
                     results.forEach(person => {
                         const resultItem = document.createElement('div');
@@ -324,45 +304,43 @@
                         `;
                         resultsList.appendChild(resultItem);
                     });
-                    resultsSection.classList.remove('hidden'); // Muestra la sección de resultados
+                    resultsSection.classList.remove('hidden'); 
                 } else {
-                    noResults.classList.remove('hidden'); // Muestra el mensaje de no resultados
+                    noResults.classList.remove('hidden'); 
                 }
             } catch (error) {
                 console.error('Error durante la búsqueda:', error);
-                displayError('Ocurrió un error al realizar la búsqueda. Asegúrese de que el servidor Python esté funcionando.');
+                displayError('El servidor no responde.');
             } finally {
-                hideLoading(); // Oculta la animación de carga al finalizar
+                hideLoading(); 
             }
         });
 
-        // Función para verificar el estado del servidor al cargar la página
         async function checkServerStatus() {
-            showLoading(); // Muestra la animación de carga inicial
+            showLoading(); 
             try {
                 const response = await fetch(`${API_URL}/status`);
                 if (response.ok) {
                     const data = await response.json();
                     if (data.status === 'ready') {
-                        // El servidor está listo, oculta la carga y permite la interacción
+
                         hideLoading();
                     } else {
-                        // El servidor aún está cargando datos o tiene problemas
-                        displayError('El servidor está cargando datos o no está disponible. Por favor, espere.');
-                        hideLoading(); // Oculta la carga pero muestra el error
+
+                        displayError('El servidor está cargando datos o no está disponible.');
+                        hideLoading(); 
                     }
                 } else {
-                    displayError('No se pudo conectar con el servidor. Asegúrese de que esté en ejecución.');
+                    displayError('No se pudo conectar con el servidor.');
                     hideLoading();
                 }
             } catch (error) {
                 console.error('Error al verificar el estado del servidor:', error);
-                displayError('No se pudo conectar con el servidor. Asegúrese de que esté en ejecución en ' + API_URL);
+                displayError('Servidor no disponible en ' + API_URL);
                 hideLoading();
             }
         }
 
-        // Llama a la función para verificar el estado del servidor al cargar la ventana
         window.addEventListener('load', checkServerStatus);
 
     </script>
