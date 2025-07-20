@@ -317,30 +317,33 @@ const response = await fetch(`${API_URL}/search`, {
             }
         });
 
-        async function checkServerStatus() {
-            showLoading(); 
-            try {
-                const response = await fetch(`${API_URL}/status`);
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.status === 'ready') {
-
-                        hideLoading();
-                    } else {
-
-                        displayError('El servidor está cargando datos o no está disponible.');
-                        hideLoading(); 
-                    }
-                } else {
-                    displayError('No se pudo conectar con el servidor.');
-                    hideLoading();
-                }
-            } catch (error) {
-                console.error('Error al verificar el estado del servidor:', error);
-                displayError('Servidor no disponible en ' + API_URL);
-                hideLoading();
+async function checkServerStatus() {
+    showLoading(); 
+    try {
+        const response = await fetch(`${API_URL}/status`, {
+            headers: {
+                'ngrok-skip-browser-warning': 'true'
             }
+        });
+        if (response.ok) {
+            const data = await response.json();
+            if (data.status === 'ready') {
+                hideLoading();
+            } else {
+                displayError('El servidor está cargando datos o no está disponible.');
+                hideLoading(); 
+            }
+        } else {
+            displayError('No se pudo conectar con el servidor.');
+            hideLoading();
         }
+    } catch (error) {
+        console.error('Error al verificar el estado del servidor:', error);
+        displayError('Servidor no disponible en ' + API_URL);
+        hideLoading();
+    }
+}
+
 
         window.addEventListener('load', checkServerStatus);
 
