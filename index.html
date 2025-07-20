@@ -233,7 +233,7 @@
         const noResults = document.getElementById('noResults');
         const errorMessage = document.getElementById('errorMessage');
 
-        const API_URL = 'https://1f238ed457a0.ngrok-free.app'; 
+        const API_URL = ' https://113b773d71f8.ngrok-free.app'; 
 
         function showLoading() {
             loadingAnimation.style.display = 'block';
@@ -286,7 +286,6 @@ const response = await fetch(`${API_URL}/search`, {
   },
   body: JSON.stringify({ nombre, apellido, cedula }),
 });
-
 
                 if (!response.ok) {
                     throw new Error(`Error HTTP! estado: ${response.status}`);
