@@ -278,15 +278,15 @@
 
             try {
 
-                const response = await fetch(`${API_URL}/search`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'ngrok-skip-browser-warning': 'true'
+const response = await fetch(`${API_URL}/search`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true'
+  },
+  body: JSON.stringify({ nombre, apellido, cedula }),
+});
 
-                    },
-                    body: JSON.stringify({ nombre, apellido, cedula }), 
-                });
 
                 if (!response.ok) {
                     throw new Error(`Error HTTP! estado: ${response.status}`);
