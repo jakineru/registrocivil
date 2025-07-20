@@ -60,7 +60,6 @@ def buscar_por_nombres_y_apellidos(nombres_to_search, apellidos_to_search):
             coincidencias.append(entry)
     return coincidencias
 
-# Ruta API para la búsqueda
 @app.route('/search', methods=['POST'])
 def search():
     data = request.json
@@ -71,7 +70,6 @@ def search():
     results = []
     search_type = "No se realizó búsqueda"
 
-    # La lógica de búsqueda prioriza la cédula, luego nombre+apellido, luego nombre, luego apellido.
     if cedula:
         result = buscar_ci(cedula)
         if result:
@@ -89,7 +87,6 @@ def search():
 
     return jsonify({'results': results, 'search_type': search_type})
 
-# Ruta API para verificar el estado del servidor (si los datos están cargados)
 @app.route('/status', methods=['GET'])
 def status():
     if DATA:
@@ -98,6 +95,6 @@ def status():
         return jsonify({'status': 'loading', 'message': 'Datos aún no cargados o archivo(s) no encontrado(s)'})
 
 if __name__ == '__main__':
-    # Llama a load_data con los nombres de tus dos archivos
     load_data(filenames=['cedulas_1.txt', 'cedulas_2.txt'])
-    app.run(debug=True, port=5000) # Ejecuta el servidor en el puerto 5000
+    app.run(host='0.0.0.0', debug=True, port=5000)
+
