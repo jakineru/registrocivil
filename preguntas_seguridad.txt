@@ -1,0 +1,49 @@
+¿Cuál es el número más pequeño, 2 o 5?|2
+¿Qué número viene después de 99?|100
+¿Cuál es la tercera letra de la palabra "gato"?|t
+¿Cuántas horas tiene un día?|24
+¿Cuál es la segunda letra de la palabra "casa"?|a
+¿Cuántos meses tiene un trimestre?|3
+¿Qué día va después de viernes?|sábado
+¿Cuál es la primer letra de la palabra "casa"?|c
+¿Cuántos minutos tiene una hora?|60
+¿Qué día va después de jueves?|viernes
+¿Qué día va después de domingo?|lunes
+¿Qué día va después de martes?|miércoles
+¿Qué animal hace "miau"?|gato
+¿Cuánto es 5 × 5?|25
+¿Cuál es la quinta letra de la palabra "elefante"?|a
+¿Cuál es el mes número 12 del año?|diciembre
+¿Qué número viene antes de 20?|19
+¿Qué número viene después de 11?|12
+¿Cuál es el mes más corto del año?|febrero
+¿Qué número es menor, 5 o 9?|5
+¿Cuántas estaciones tiene un año?|4
+¿En qué mes se celebra la Navidad?|diciembre
+¿Cuánto es 3 + 5?|8
+¿Cuál es la última letra del alfabeto?|z
+¿Qué número es mayor, 14 o 18?|18
+¿Qué día va después de sábado?|domingo
+¿Cuántos lados tiene un triángulo?|3
+¿Cuántas vocales hay en la palabra "amigo"?|3
+¿Qué número es mayor, 12 o 20?|20
+¿Cuál es la primera letra de la palabra "sol"?|s
+¿Cuántos segundos hay en un minuto?|60
+¿Qué día va después de lunes?|martes
+¿Cuál es la suma de 6 y 4?|10
+¿Cuál es el número que viene antes de 100?|99
+¿Cuál es el número que viene antes de 7?|6
+¿Qué día va después de miércoles?|jueves
+¿Qué número viene después de 15?|16
+¿Qué número es mayor, 4 o 9?|9
+¿Cuál es la primera letra de la palabra "perro"?|p
+¿Cuántos días tiene una semana?|7
+¿Qué color es la nieve?|blanco
+¿Qué número es mayor, 50 o 75?|75
+¿Qué número es mayor, 9 o 3?|9
+¿Cuál es el número que sigue después de 10?|11
+¿Cuál es el número entre 7 y 9?|8
+¿Cuál es el número más pequeño, 6 o 12?|6
+¿Cuánto es 7 × 3?|21
+¿Cuál es la tercera letra de la palabra "casa"?|s
+¿Cuál es la primera letra del alfabeto?|a
