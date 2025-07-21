@@ -1,2 +1,275 @@
-Rocha 4,Castillos
+seccional,lugar_de_la_seccional
+Artigas 1,Artigas Ciudad
+Artigas 2,Artigas
+Artigas 3,Pintado
+Artigas 4,Bernabé Rivera
+Artigas 5,Paso Farías
+Artigas 6,Tomás Gomensoro
+Artigas 7,Bella Unión
+Artigas 8,Baltasar Brum
+Artigas 9,Sequeira
+Artigas 10,Paguero
+Artigas 12,Javier de Viana
+Artigas 13,Colonia Palma
+Canelones 1,Canelones
+Canelones 2,Santa Lucía
+Canelones 3,Los Cerrillos
+Canelones 4,Las Piedras
+Canelones 5,La Paz
+Canelones 6,Sauce
+Canelones 7,Pando
+Canelones 8,Soca
+Canelones 9,Migues
+Canelones 10,Tala
+Canelones 11,San Ramón
+Canelones 12,San Bautista
+Canelones 13,Santa Rosa
+Canelones 14,Santa Rosa 2
+Canelones 15,San Antonio
+Canelones 16,Suárez
+Canelones 17,Atlántida
+Canelones 18,Ciudad de la Costa
+Canelones 19,Progreso
+Canelones 20,Toledo
+Canelones 21,Las Piedras
+Canelones 22,Salinas
+Canelones 23,La Floresta
+Canelones 24,Parque del Plata
+Canelones 25,Capitán José Artigas
+Canelones 26,Paso Carrasco
+Canelones 27,El Pinar
+Canelones 28,Colonia Nicolich
+Canelones 29,Cuchilla Alta
+Canelones 30,San Luis
+Cerro Largo 1,Melo
+Cerro Largo 2,Río Branco
+Cerro Largo 3,Fraile Muerto
+Cerro Largo 4,Aceguá
+Cerro Largo 5,Isidoro Noblía
+Cerro Largo 6,Arbolito
+Cerro Largo 7,Tupambaé
+Cerro Largo 8,Bañado de Medina
+Cerro Largo 9,Lago Merín
+Cerro Largo 10,Las Cañas
+Cerro Largo 11,Plácido Rosas
+Cerro Largo 12,Getulio Vargas
+Cerro Largo 13,Arévalo
+Cerro Largo 14,Barrio Hipódromo
+Cerro Largo 15,Barrio Sosa
+Cerro Largo 16,Barrio Artigas
+Colonia 1,Colonia del Sacramento
+Colonia 2,Rosario
+Colonia 3,Carmelo
+Colonia 4,Nueva Palmira
+Colonia 5,Nueva Helvecia
+Colonia 6,Colonia Valdense
+Colonia 7,Real de San Carlos
+Colonia 8,Juan Lacaze
+Colonia 9,Conchillas
+Colonia 10,El Cerro
+Colonia 11,Polanco
+Colonia 12,Ombúes de Lavalle
+Colonia 13,Colonia Miguelete
+Colonia 14,Tarariras
+Colonia 15,Riachuelo
+Colonia 16,Granja San José
+Colonia 17,Florencio Sánchez
+Colonia 18,Cufré
+Durazno 1,Durazno
+Durazno 2,Sarandí del Yí
+Durazno 3,Villa del Carmen
+Durazno 4,Blanquillo
+Durazno 5,Carlos Reyles
+Durazno 6,Centenario
+Durazno 7,Santa Bernardina
+Durazno 8,Aguas Buenas
+Durazno 9,San Jorge
+Durazno 10,Baygorria
+Durazno 11,La Paloma
+Durazno 12,Rossell y Rius
+Durazno 13,Feliciano
+Durazno 14,Pueblo de Álvarez
+Durazno 15,Pueblo de los Silveira
+Flores 1,Trinidad
+Flores 2,Porongos
+Flores 3,Marincho
+Flores 4,Puntas del Sauce
+Flores 5,Pintos
+Flores 6,Juan José Castro
+Flores 7,La Pedrera
+Flores 8,Chamangá
+Flores 9,Ismael Cortinas
+Florida 1,Florida
+Florida 2,Fray Marcos
+Florida 3,25 de Mayo
+Florida 4,Sarandí Grande
+Florida 5,25 de Agosto
+Florida 6,Casupá
+Florida 7,San Fernando
+Florida 8,La Cruz
+Florida 9,Juncal
+Florida 10,Polanco del Yí
+Florida 11,Capilla del Sauce
+Florida 12,Nicolás Pérez
+Florida 13,Goñi
+Florida 14,Cerro Colorado
+Florida 15,Mendoza Grande
+Florida 16,Cardal
+Lavalleja 1,Minas
+Lavalleja 2,Villa Solís de Mataojo
+Lavalleja 3,La Calera
+Lavalleja 4,Barrio España
+Lavalleja 5,Paraje Polanco
+Lavalleja 6,Paraje Barriga Negra
+Lavalleja 7,Paraje Marmaraja
+Lavalleja 8,Villa Marícala
+Lavalleja 9,Pueblo Pirarajá
+Lavalleja 10,José Pedro Varela
+Lavalleja 11,Pueblo Zapicán
+Lavalleja 12,Villa José Batlle y Ordóñez
+Lavalleja 13,Paraje Villa Rosario
+Lavalleja 14,Las Delicias
+Maldonado 1,Maldonado
+Maldonado 2,San Carlos
+Maldonado 3,Pan de Azúcar
+Maldonado 4,Mattojo
+Maldonado 5,Balneario Solís
+Maldonado 6,Maldonado Nuevo
+Maldonado 7,Garzón
+Maldonado 8,Aigua
+Maldonado 9,La Coronilla
+Maldonado 10,Punta del Este
+Maldonado 11,Piriápolis
+Maldonado 12,La Barra
+Maldonado 13,Faro José Ignacio
+Montevideo 1,Ciudad Vieja
+Montevideo 2,Cordón
+Montevideo 3,Centro
+Montevideo 4,Villa Muñoz
+Montevideo 5,La Comercial
+Montevideo 6,Prado
+Montevideo 7,Cerro
+Montevideo 8,La Unión
+Montevideo 9,Parque Rodó
+Montevideo 10,Barrio Sur
+Montevideo 11,Punta de Rieles
+Montevideo 12,Malvín Norte
+Montevideo 13,Carrasco Norte
+Montevideo 14,Punta Gorda
+Montevideo 15,Pocitos
+Montevideo 16,Buceo
+Montevideo 17,Colón
+Montevideo 18,Flor de Maroñas
+Montevideo 19,Sayago
+Montevideo 20,Paso de la Arena
+Montevideo 21,Manga
+Montevideo 22,Casavalle
+Montevideo 23,Piedras Blancas
+Montevideo 24,Conciliación
+Montevideo 25,Peñarol
+Montevideo 98,Aeropuerto de Carrasco
+Montevideo 99,Dirección Nacional de Bomberos
+Paysandú 1,Paysandú
+Paysandú 2,Guichón
+Paysandú 3,Quebracho
+Paysandú 4,Chacras de Paysandú
+Paysandú 5,Lorenzo Geyres
+Paysandú 6,Termas de Guaviyú
+Paysandú 7,Piedras Coloradas
+Paysandú 8,San Félix
+Paysandú 9,Porvenir
+Paysandú 10,Tambores
+Paysandú 11,Merinos
+Paysandú 12,Gallinal
+Río Negro 1,Fray Bentos
+Río Negro 2,Young
+Río Negro 3,Cabinitas
+Río Negro 4,Nuevo Berlín
+Río Negro 5,San Javier
+Río Negro 6,Young
+Río Negro 7,Paso de la Cruz
+Río Negro 8,Paso de los Mellizos
+Río Negro 9,Sarandí de Navarro
+Río Negro 10,Pueblo Grecco
+Río Negro 11,El Águila
+Río Negro 12,Sánchez
+Rivera 1,Rivera
+Rivera 2,Estación Ataques
+Rivera 3,Tranqueras
+Rivera 4,Paso del Ataque
+Rivera 5,Minas de Corrales
+Rivera 6,Moirones
+Rivera 7,Paso La Puente
+Rivera 8,Villa Vichadero
+Rivera 9,Pueblo Nuevo
+Rivera 10,Rivera Chico
+Rivera 13,Lapuente
 Rocha 1,Rocha
+Rocha 2,La Coronilla
+Rocha 3,Lascano
+Rocha 4,Castillos
+Rocha 5,Chuy
+Rocha 6,Cebollatí
+Rocha 7,El Canelón
+Rocha 8,19 de Abril
+Rocha 9,18 de Julio
+Rocha 11,La Paloma
+Rocha 12,Las Chacras
+Salto 1,Salto
+Salto 2,Constitución
+Salto 3,Belén
+Salto 4,Colonia Lavalleja
+Salto 5,San Antonio
+Salto 6,Pueblo Quintana
+Salto 7,Laureles
+Salto 8,Pueblo Fernández
+Salto 9,Pueblo Cayetano
+Salto 10,Pueblo Celeste
+Salto 11,Vera
+Salto 12,Termas del Daymán
+Salto 13,Termas del Arapey
+Salto 14,Cerro Chato
+Salto 15,Pueblo Migliaro
+San José 1,San José de Mayo
+San José 2,Ciudad del Plata
+San José 3,Libertad
+San José 4,Rodríguez
+San José 5,Ecilda Paullier
+San José 6,Mal Abrigo
+San José 7,Rafael Perazza
+San José 8,Capurro
+San José 9,González
+San José 10,Puntas de Valdez
+San José 11,Kiyú
+Soriano 1,Mercedes
+Soriano 2,Mercedes
+Soriano 3,Mercedes
+Soriano 4,Villa Soriano
+Soriano 5,Dolores
+Soriano 6,Palmitas
+Soriano 7,Pueblo Agraciada
+Soriano 8,Santa Catalina
+Soriano 9,Pueblo Agraciada
+Soriano 10,Villa José Enrique Rodó
+Tacuarembó 1,Tacuarembó
+Tacuarembó 2,Paso de los Toros
+Tacuarembó 3,San Gregorio de Polanco
+Tacuarembó 4,Achar
+Tacuarembó 5,Curtina
+Tacuarembó 6,Tambores
+Tacuarembó 7,Peralta
+Tacuarembó 8,La Pedrera
+Tacuarembó 9,Las Toscas
+Tacuarembó 10,Paso Bonilla
+Tacuarembó 11,Pueblo de Arriba
+Tacuarembó 12,Ansina
+Tacuarembó 13,Balneario Iporá
+Treinta y Tres 1,Treinta y Tres
+Treinta y Tres 2,Pueblo General Enrique Martínez
+Treinta y Tres 3,Pueblo Rincón
+Treinta y Tres 4,Cuchilla de Dionisio
+Treinta y Tres 5,Villa María Isabel
+Treinta y Tres 6,Cerro Chato
+Treinta y Tres 7,Villa Sara
+Treinta y Tres 8,Santa Clara de Olimar
+Treinta y Tres 9,Vergara
