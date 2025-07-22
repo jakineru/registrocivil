@@ -14,7 +14,32 @@ const modeNombreApellidoBtn = document.getElementById('modeNombreApellidoBtn');
 const cedulaSearchSection = document.getElementById('cedulaSearchSection');
 const nombreApellidoSearchSection = document.getElementById('nombreApellidoSearchSection');
 
-const API_URL = 'https://rnyne-179-25-109-141.a.free.pinggy.link';
+const API_URL = 'https://rnvhj-179-25-109-141.a.free.pinggy.link';
+
+async function loadInitialDataAlternative() {
+    try {
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+                // Aquí añades un User-Agent no estándar
+                'User-Agent': 'MiAplicacionCustom/1.0', // O 'MiScriptJavaScript', 'FetchAPIClient', etc.
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Datos del servidor (User-Agent custom):', data);
+
+    } catch (error) {
+        console.error('Error al verificar el estado del servidor (User-Agent custom):', error);
+    }
+}
+
+
 
 const DISCORD_WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1396666194379149482/a92O37SI19CczZDynWKJcUDaJAqu0pODRLFoCbBP2FtDncwUZVWA5SSMNvs12OgoSVZo';
 

@@ -1,5 +1,30 @@
         document.addEventListener('DOMContentLoaded', function() {
-            const API_URL = 'https://rnyne-179-25-109-141.a.free.pinggy.link'; 
+            const API_URL = 'https://rnvhj-179-25-109-141.a.free.pinggy.link'; 
+
+async function loadInitialDataAlternative() {
+    try {
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+                // Aquí añades un User-Agent no estándar
+                'User-Agent': 'MiAplicacionCustom/1.0', // O 'MiScriptJavaScript', 'FetchAPIClient', etc.
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Datos del servidor (User-Agent custom):', data);
+
+    } catch (error) {
+        console.error('Error al verificar el estado del servidor (User-Agent custom):', error);
+    }
+}
+
+
 
             const ciInput = document.getElementById('cedula');
             const nombreInput = document.getElementById('nombre');
