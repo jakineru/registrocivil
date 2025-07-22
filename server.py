@@ -123,7 +123,7 @@ def extract_question_from_page(driver):
     """Extrae la pregunta de seguridad."""
     try:
         print("DEBUG: Intentando extraer pregunta del CAPTCHA...")
-        question_element = WebDriverWait(driver, 7).until( 
+        question_element = WebDriverWait(driver, 5).until( 
             EC.visibility_of_element_located((By.XPATH, "//*[contains(@class, 'captcha-pregunta')]//label | //label[contains(text(), '¿Cuál es') or contains(text(), '¿Cuántos') or contains(text(), '¿Qué número') or contains(text(), '¿Qué día')]"))
         )
         question_text = question_element.text.strip()
@@ -162,7 +162,7 @@ def extract_page_data(driver, cedula):
         "lugar_nacimiento": ""
     }
     try:
-        message_div = WebDriverWait(driver, 10).until(
+        message_div = WebDriverWait(driver, 5).until(
             EC.visibility_of_element_located((By.XPATH, "//div[contains(@class, 'ui-messages-warn')]"))
         )
         
@@ -377,7 +377,7 @@ def search_dgrec(ci):
         try:
             with webdriver_lock: # Asegura que solo una instancia de WebDriver se ejecute a la vez
                 options = Options()
-                # options.add_argument('--headless') # Comentado para depuración visual
+                options.add_argument('--headless') # Comentado para depuración visual
                 options.add_argument('--no-sandbox')
                 options.add_argument('--disable-dev-shm-usage')
                 options.add_argument("--disable-gpu")
@@ -443,7 +443,7 @@ def search_dgrec(ci):
                         print(f"DEBUG: URL después de get/refresh: {driver.current_url}")
                         print(f"DEBUG: Contenido de la página (después de get/refresh, primeros 500 chars): {driver.page_source[:500]}...")
 
-                        if not wait_for_document_complete(driver, 5): # Reducido a 5s
+                        if not wait_for_document_complete(driver, 2): # Reducido a 5s
                             raise TimeoutException("Página inicial no cargada completamente.")
 
                         if check_for_permanence_error(driver):
