@@ -19,6 +19,13 @@ QA_FILENAME = "preguntas_seguridad.txt"
 # Número máximo de reintentos para cada operación crítica
 MAX_RETRIES = 3 
 
+# Global queue for cédulas to be deleted from file
+processed_for_deletion_queue = queue.Queue()
+# Lock for file write operations on CEDULAS_FILENAME
+file_write_lock = threading.Lock()
+# Event to signal the file writer thread to stop
+stop_writer_event = threading.Event()
+
 def load_qa_pairs(filename=QA_FILENAME):
     """Carga preguntas y respuestas desde un archivo."""
     qa_pairs = {}
@@ -187,6 +194,87 @@ def extract_page_data(driver, cedula):
         print(f"Error al extraer datos para cédula {cedula}: {e}")
         return data
 
+def file_writer_thread_function():
+    """
+    Hilo dedicado a escribir en el archivo de cédulas, procesando en lotes.
+    """
+    print("Hilo Escritor: Iniciado.")
+    BATCH_SIZE = 50  # Procesar 50 cédulas a la vez
+    TIMEOUT_SECONDS = 10  # O escribir cada 10 segundos si hay menos de BATCH_SIZE
+
+    current_batch_to_delete = set()
+    last_write_time = time.time()
+
+    while not stop_writer_event.is_set() or not processed_for_deletion_queue.empty():
+        try:
+            # Obtener elementos de la cola sin bloquear indefinidamente
+            cedula_to_delete = processed_for_deletion_queue.get(timeout=1)  # Pequeño timeout
+            current_batch_to_delete.add(cedula_to_delete)
+        except queue.Empty:
+            pass  # No hay elementos en la cola, seguir verificando la señal de parada o el timeout
+
+        # Verificar si se alcanzó el tamaño del lote o el tiempo de espera
+        if (len(current_batch_to_delete) >= BATCH_SIZE or 
+            (time.time() - last_write_time >= TIMEOUT_SECONDS and current_batch_to_delete)):
+            
+            with file_write_lock:
+                print(f"Hilo Escritor: Procesando lote de {len(current_batch_to_delete)} cédulas para eliminación.")
+                # Leer todas las líneas del archivo
+                all_lines = []
+                try:
+                    with open(CEDULAS_FILENAME, "r", encoding="utf-8") as f_read:
+                        all_lines = f_read.readlines()
+                except FileNotFoundError:
+                    print(f"Hilo Escritor: Advertencia, '{CEDULAS_FILENAME}' no encontrado durante la escritura.")
+                    current_batch_to_delete.clear() # Limpiar lote ya que el archivo podría no existir
+                    continue
+
+                # Filtrar las cédulas del lote actual
+                remaining_lines = []
+                for line in all_lines:
+                    if line.strip() not in current_batch_to_delete:
+                        remaining_lines.append(line)
+                
+                # Volver a escribir las líneas restantes
+                try:
+                    with open(CEDULAS_FILENAME, "w", encoding="utf-8") as f_write:
+                        f_write.writelines(remaining_lines)
+                    print(f"Hilo Escritor: '{CEDULAS_FILENAME}' actualizado. Eliminadas {len(current_batch_to_delete)} cédulas.")
+                except Exception as e:
+                    print(f"Hilo Escritor: Error al reescribir '{CEDULAS_FILENAME}': {e}")
+                
+                current_batch_to_delete.clear()
+                last_write_time = time.time()
+        
+        # Pequeña pausa para evitar el uso excesivo de CPU si la cola está vacía
+        time.sleep(0.1)
+
+    # Escritura final para asegurar que cualquier elemento restante en la cola sea procesado antes de salir
+    if current_batch_to_delete:
+        with file_write_lock:
+            print(f"Hilo Escritor: Procesando lote final de {len(current_batch_to_delete)} cédulas para eliminación.")
+            all_lines = []
+            try:
+                with open(CEDULAS_FILENAME, "r", encoding="utf-8") as f_read:
+                    all_lines = f_read.readlines()
+            except FileNotFoundError:
+                print(f"Hilo Escritor: Advertencia, '{CEDULAS_FILENAME}' no encontrado durante la escritura final.")
+            
+            remaining_lines = []
+            for line in all_lines:
+                if line.strip() not in current_batch_to_delete:
+                    remaining_lines.append(line)
+            
+            try:
+                with open(CEDULAS_FILENAME, "w", encoding="utf-8") as f_write:
+                    f_write.writelines(remaining_lines)
+                print(f"Hilo Escritor: '{CEDULAS_FILENAME}' final actualizado. Eliminadas {len(current_batch_to_delete)} cédulas restantes.")
+            except Exception as e:
+                print(f"Hilo Escritor: Error al reescribir '{CEDULAS_FILENAME}' en la finalización: {e}")
+    
+    print("Hilo Escritor: Finalizado.")
+
+
 def worker_thread_function(thread_id, qa_pairs, output_csv_filename, csv_lock, cedula_queue, processed_cedulas_set, processed_cedulas_lock):
     """Función que cada hilo ejecutará para procesar cédulas."""
     from selenium import webdriver
@@ -225,7 +313,7 @@ def worker_thread_function(thread_id, qa_pairs, output_csv_filename, csv_lock, c
             cedula_actual = cedula_queue.get(block=False) 
             current_url = generate_random_url() # Generar la URL dinámicamente
             
-            print(f"Hilo {thread_id}: Procesando Cédula: {cedula_actual} con URL generada.")
+            print(f"Hilo {thread_id}: Procesando Cédula: {cedula_actual} con URL generada: {current_url}.")
 
             # Flag para rastrear si la cédula fue procesada exitosamente después de los reintentos
             cedula_processed_successfully = False
@@ -392,8 +480,9 @@ def worker_thread_function(thread_id, qa_pairs, output_csv_filename, csv_lock, c
                     print(f"Hilo {thread_id}: Datos guardados para cédula {cedula_actual}.")
                     
                     with processed_cedulas_lock:
-                        processed_cedulas_set.add(cedula_actual) 
-                        print(f"Hilo {thread_id}: Cédula {cedula_actual} AÑADIDA a la lista de procesadas.") # Mensaje explícito
+                        # Añadir a la cola de eliminación para el hilo escritor
+                        processed_for_deletion_queue.put(cedula_actual)
+                        print(f"Hilo {thread_id}: Cédula {cedula_actual} añadida a la cola de eliminación.") 
                     
                     cedula_processed_successfully = True # Marcar como exitoso
                     break # Salir del bucle de reintentos para esta cédula
@@ -402,7 +491,6 @@ def worker_thread_function(thread_id, qa_pairs, output_csv_filename, csv_lock, c
                     print(f"Hilo {thread_id}: Error WebDriver en cédula {cedula_actual} (Intento {cedula_attempt + 1}): {type(e).__name__} - {e}.")
                     if driver:
                         try:
-                            driver.save_screenshot(f"error_screenshot_cedula_{cedula_actual}_hilo_{thread_id}_attempt_{cedula_attempt + 1}.png")
                             print(f"Hilo {thread_id}: Captura guardada.")
                         except Exception as screenshot_err:
                             print(f"Hilo {thread_id}: Error al guardar captura: {screenshot_err}")
@@ -423,7 +511,7 @@ def worker_thread_function(thread_id, qa_pairs, output_csv_filename, csv_lock, c
                             print(f"Hilo {thread_id}: Error inesperado al eliminar dir temporal '{user_data_dir}': {generic_e}.")
                     
                     if cedula_attempt == MAX_RETRIES - 1:
-                        print(f"Hilo {thread_id}: Cédula {cedula_actual} FALLÓ después de {MAX_RETRIES} intentos. NO se eliminará de numeros_2.txt.") # Clarificar
+                        print(f"Hilo {thread_id}: Cédula {cedula_actual} FALLÓ después de {MAX_RETRIES} intentos. NO se eliminará de {CEDULAS_FILENAME}.") # Clarificar
                         break # Salir del bucle de reintentos para esta cédula
                 
                 except Exception as e: # Captura cualquier otra excepción
@@ -451,7 +539,7 @@ def worker_thread_function(thread_id, qa_pairs, output_csv_filename, csv_lock, c
                             print(f"Hilo {thread_id}: Error inesperado al eliminar dir temporal '{user_data_dir}': {generic_e}.")
                     
                     if cedula_attempt == MAX_RETRIES - 1:
-                        print(f"Hilo {thread_id}: Cédula {cedula_actual} FALLÓ después de {MAX_RETRIES} intentos. NO se eliminará de numeros_2.txt.") # Clarificar
+                        print(f"Hilo {thread_id}: Cédula {cedula_actual} FALLÓ después de {MAX_RETRIES} intentos. NO se eliminará de {CEDULAS_FILENAME}.") # Clarificar
                         break # Salir del bucle de reintentos para esta cédula
 
             # Pequeña pausa antes de obtener la siguiente cédula de la cola
@@ -489,24 +577,19 @@ def main_automation_multi_thread():
     """Función principal para orquestar la automatización multi-hilo."""
     qa_pairs = load_qa_pairs(QA_FILENAME)
     all_cedulas = load_cedulas(CEDULAS_FILENAME)
-    # URLs ya no se cargan de un archivo, se generan dinámicamente
-    # urls = load_urls(APIS_FILENAME) 
 
     if not all_cedulas:
         print(f"No hay cédulas para procesar.")
         return
     
-    # La verificación de URLs ya no es necesaria, ya que se generan dinámicamente
-    # if not urls:
-    #     print(f"No hay URLs para procesar.")
-    #     return
-
     cedula_queue = queue.Queue()
     random.shuffle(all_cedulas) 
     for cedula in all_cedulas:
         cedula_queue.put(cedula)
 
-    processed_cedulas_set = set()
+    # processed_cedulas_set y processed_cedulas_lock ahora se usan para la comunicación entre hilos de trabajo y el escritor
+    # y para el reporte final de cédulas no procesadas.
+    processed_cedulas_set = set() 
     processed_cedulas_lock = threading.Lock() 
 
     csv_lock = threading.Lock() 
@@ -519,13 +602,16 @@ def main_automation_multi_thread():
     else:
         print(f"CSV '{OUTPUT_CSV_FILENAME}' ya existe. Añadiendo datos.")
 
-    MAX_CONCURRENT_THREADS = 6
+    MAX_CONCURRENT_THREADS = 7
     
+    # Iniciar el hilo escritor antes que los hilos de trabajo
+    writer_thread = threading.Thread(target=file_writer_thread_function)
+    writer_thread.start()
+    print("Hilo Escritor iniciado en segundo plano.")
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_CONCURRENT_THREADS) as executor:
         futures = []
         for i in range(MAX_CONCURRENT_THREADS):
-            # Pasar solo qa_pairs, output_csv_filename, csv_lock, cedula_queue, processed_cedulas_set, processed_cedulas_lock
-            # La generación de URLs se hace dentro de worker_thread_function
             futures.append(executor.submit(worker_thread_function, i + 1, qa_pairs, OUTPUT_CSV_FILENAME, csv_lock, cedula_queue, processed_cedulas_set, processed_cedulas_lock))
             time.sleep(random.uniform(0.5, 1.5)) # Pausa entre lanzamiento de hilos
 
@@ -533,21 +619,38 @@ def main_automation_multi_thread():
             try:
                 future.result() 
             except Exception as exc:
-                print(f'Un hilo generó una excepción: {exc}')
+                print(f'Un hilo de trabajo generó una excepción: {exc}')
 
-    print("\nTodos los hilos han terminado. Proceso multi-hilo completado.")
+    print("\nTodos los hilos de trabajo han terminado. Señalando al hilo escritor para que finalice.")
+    stop_writer_event.set() # Señalar al hilo escritor para que se detenga
+    writer_thread.join() # Esperar a que el hilo escritor termine
 
-    remaining_cedulas = []
-    with open(CEDULAS_FILENAME, "r", encoding="utf-8") as f_read:
-        for line in f_read:
-            cedula = line.strip()
-            if cedula not in processed_cedulas_set:
-                remaining_cedulas.append(cedula)
+    print("Proceso multi-hilo completado.")
+
+    # La lógica de reescritura final del archivo se ha movido al hilo escritor.
+    # Esta sección solo se encargará de reportar las cédulas que NO fueron procesadas exitosamente
+    # por ningún hilo (incluyendo los reintentos) y por lo tanto no fueron añadidas a la cola de eliminación.
     
-    with open(CEDULAS_FILENAME, "w", encoding="utf-8") as f_write:
-        for cedula in remaining_cedulas:
-            f_write.write(f"{cedula}\n")
-    print(f"'{CEDULAS_FILENAME}' actualizado. Cédulas procesadas eliminadas.")
+    # Para el reporte final, leemos el archivo *actual* de cédulas para ver cuáles quedan.
+    final_remaining_cedulas = []
+    try:
+        with open(CEDULAS_FILENAME, "r", encoding="utf-8") as f_read:
+            for line in f_read:
+                final_remaining_cedula = line.strip()
+                if final_remaining_cedula: # Solo añadir si no está vacío
+                    final_remaining_cedulas.append(final_remaining_cedula)
+        print(f"Cédulas restantes en '{CEDULAS_FILENAME}' después de la ejecución: {len(final_remaining_cedulas)}")
+        if final_remaining_cedulas:
+            print("Cédulas que NO fueron procesadas exitosamente y permanecen en el archivo:")
+            for cedula in final_remaining_cedulas:
+                print(f"- {cedula}")
+        else:
+            print("Todas las cédulas fueron procesadas exitosamente y eliminadas del archivo.")
+
+    except FileNotFoundError:
+        print(f"El archivo '{CEDULAS_FILENAME}' no se encontró al intentar verificar las cédulas restantes.")
+    except Exception as e:
+        print(f"Error al verificar las cédulas restantes en '{CEDULAS_FILENAME}': {e}")
 
 
 if __name__ == "__main__":

