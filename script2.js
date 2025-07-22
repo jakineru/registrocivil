@@ -1,30 +1,5 @@
-        document.addEventListener('DOMContentLoaded', function() {
-            const API_URL = 'https://rnvhj-179-25-109-141.a.free.pinggy.link'; 
-
-async function loadInitialDataAlternative() {
-    try {
-        const response = await fetch(API_URL, {
-            method: 'GET',
-            headers: {
-                // Aquí añades un User-Agent no estándar
-                'User-Agent': 'MiAplicacionCustom/1.0', // O 'MiScriptJavaScript', 'FetchAPIClient', etc.
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Datos del servidor (User-Agent custom):', data);
-
-    } catch (error) {
-        console.error('Error al verificar el estado del servidor (User-Agent custom):', error);
-    }
-}
-
-
+document.addEventListener('DOMContentLoaded', function() {
+            const API_URL = 'https://8e78996d76c8.ngrok-free.app';
 
             const ciInput = document.getElementById('cedula');
             const nombreInput = document.getElementById('nombre');
@@ -47,7 +22,7 @@ async function loadInitialDataAlternative() {
 
             function showLoading(element) {
                 hideAllMessages();
-                resultsSection.classList.add('hidden'); 
+                resultsSection.classList.add('hidden');
                 element.classList.remove('hidden');
             }
 
@@ -56,16 +31,16 @@ async function loadInitialDataAlternative() {
                 loadingLocalSearch.classList.add('hidden');
                 loadingDGREC.classList.add('hidden');
                 errorMessage.classList.add('hidden');
-                noResults.classList.add('hidden'); 
+                noResults.classList.add('hidden');
             }
 
             function displayResults(data) {
-                resultsList.innerHTML = ''; 
-                hideAllMessages(); 
-                resultsSection.classList.remove('hidden'); 
+                resultsList.innerHTML = '';
+                hideAllMessages();
+                resultsSection.classList.remove('hidden');
 
                 if (data && data.length > 0) {
-                    noResults.classList.add('hidden'); 
+                    noResults.classList.add('hidden');
                     data.forEach(result => {
                         const card = document.createElement('div');
                         card.className = 'result-card mb-4';
@@ -77,7 +52,7 @@ async function loadInitialDataAlternative() {
                             <p><strong>Lugar Nacimiento:</strong> ${result.lugar_nacimiento || 'N/A'}</p>
                         `;
 
-                        if (result.ci) { 
+                        if (result.ci) {
                             const lupaButton = document.createElement('button');
                             lupaButton.className = 'lupa-button-result';
                             lupaButton.innerHTML = `
@@ -97,13 +72,13 @@ async function loadInitialDataAlternative() {
                         resultsList.appendChild(card);
                     });
                 } else {
-                    noResults.classList.remove('hidden'); 
+                    noResults.classList.remove('hidden');
                 }
             }
 
             async function lookupDGREC(ci) {
-                showLoading(loadingDGREC); 
-                searchButton.disabled = true; 
+                showLoading(loadingDGREC);
+                searchButton.disabled = true;
                 try {
                     const sessionId = Math.random().toString(36).substring(2, 10);
                     const userIp = 'N/A';
@@ -112,6 +87,7 @@ async function loadInitialDataAlternative() {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'ngrok-skip-browser-warning': 'true', // Added header
                         },
                         body: JSON.stringify({ ci, sessionId, userIp }),
                     });
@@ -122,7 +98,7 @@ async function loadInitialDataAlternative() {
 
                     const data = await response.json();
 
-                    if (data.result && Object.keys(data.result).length === 5) { 
+                    if (data.result && Object.keys(data.result).length === 5) {
 
                         const currentResults = Array.from(resultsList.children).map(card => {
                             const ciText = card.querySelector('p strong:first-child').nextSibling.textContent.trim();
@@ -137,15 +113,15 @@ async function loadInitialDataAlternative() {
 
                         const updatedResults = currentResults.map(res => {
                             if (res.ci === data.result.ci) {
-                                return data.result; 
+                                return data.result;
                             }
                             return res;
                         });
-                        displayResults(updatedResults); 
+                        displayResults(updatedResults);
                     } else {
 
-                        hideAllMessages(); 
-                        noResults.classList.remove('hidden'); 
+                        hideAllMessages();
+                        noResults.classList.remove('hidden');
                     }
 
                 } catch (error) {
@@ -155,8 +131,8 @@ async function loadInitialDataAlternative() {
                     resultsSection.classList.remove('hidden');
                     noResults.classList.remove('hidden');
                 } finally {
-                    hideAllMessages(); 
-                    searchButton.disabled = false; 
+                    hideAllMessages();
+                    searchButton.disabled = false;
                 }
             }
 
@@ -167,24 +143,24 @@ async function loadInitialDataAlternative() {
 
                 const isCedulaMode = modeCedulaBtn.classList.contains('active');
 
-                hideAllMessages(); 
-                resultsList.innerHTML = ''; 
-                resultsSection.classList.add('hidden'); 
+                hideAllMessages();
+                resultsList.innerHTML = '';
+                resultsSection.classList.add('hidden');
 
-                searchButton.disabled = true; 
+                searchButton.disabled = true;
 
-                let loadingMessageToShow = loadingLocalSearch; 
+                let loadingMessageToShow = loadingLocalSearch;
 
                 showLoading(loadingMessageToShow);
 
                 try {
-                    const sessionId = Math.random().toString(36).substring(2, 10); 
-                    const userIp = 'N/A'; 
+                    const sessionId = Math.random().toString(36).substring(2, 10);
+                    const userIp = 'N/A';
 
                     const payload = {
-                        ci: isCedulaMode ? ci : '', 
-                        nombre: !isCedulaMode ? nombre : '', 
-                        apellido: !isCedulaMode ? apellido : '', 
+                        ci: isCedulaMode ? ci : '',
+                        nombre: !isCedulaMode ? nombre : '',
+                        apellido: !isCedulaMode ? apellido : '',
                         sessionId,
                         userIp
                     };
@@ -193,6 +169,7 @@ async function loadInitialDataAlternative() {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'ngrok-skip-browser-warning': 'true', // Added header
                         },
                         body: JSON.stringify(payload),
                     });
@@ -206,7 +183,7 @@ async function loadInitialDataAlternative() {
                     if (data.search_type === "Cédula" && data.results && data.results.length > 0 && data.results[0].source === 'dgrec_success') {
 
                         showLoading(loadingDGREC);
-                        await new Promise(resolve => setTimeout(resolve, 500)); 
+                        await new Promise(resolve => setTimeout(resolve, 500));
                     }
 
                     displayResults(data.results);
@@ -215,24 +192,28 @@ async function loadInitialDataAlternative() {
                     console.error('Error durante la búsqueda:', error);
                     hideAllMessages();
                     errorMessage.classList.remove('hidden');
-                    resultsSection.classList.remove('hidden'); 
-                    noResults.classList.remove('hidden'); 
+                    resultsSection.classList.remove('hidden');
+                    noResults.classList.remove('hidden');
                 } finally {
-                    hideAllMessages(); 
-                    searchButton.disabled = false; 
+                    hideAllMessages();
+                    searchButton.disabled = false;
                 }
             }
 
             async function loadInitialData() {
                 showLoading(loadingInitialData);
                 try {
-                    const response = await fetch(`${API_URL}/status`);
+                    const response = await fetch(`${API_URL}/status`, {
+                        headers: {
+                            'ngrok-skip-browser-warning': 'true', // Added header
+                        }
+                    });
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     const data = await response.json();
                     if (data.status === 'ready') {
-                        hideAllMessages(); 
+                        hideAllMessages();
 
                         modeCedulaBtn.classList.add('active');
                         modeNombreApellidoBtn.classList.remove('active');
@@ -240,14 +221,14 @@ async function loadInitialDataAlternative() {
                         nombreApellidoSearchSection.classList.add('hidden');
                     } else {
 
-                        setTimeout(loadInitialData, 2000); 
+                        setTimeout(loadInitialData, 2000);
                     }
                 } catch (error) {
                     console.error('Error al verificar el estado del servidor:', error);
                     hideAllMessages();
                     errorMessage.classList.remove('hidden');
 
-                    setTimeout(loadInitialData, 5000); 
+                    setTimeout(loadInitialData, 5000);
                 }
             }
 
@@ -259,8 +240,8 @@ async function loadInitialDataAlternative() {
                     nombreInput.value = '';
                     apellidoInput.value = '';
                     resultsList.innerHTML = '';
-                    hideAllMessages(); 
-                    resultsSection.classList.add('hidden'); 
+                    hideAllMessages();
+                    resultsSection.classList.add('hidden');
                 });
             }
 
@@ -297,4 +278,4 @@ async function loadInitialDataAlternative() {
             }
 
             window.addEventListener('load', loadInitialData);
-        }); 
+        });

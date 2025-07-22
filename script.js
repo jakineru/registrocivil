@@ -14,41 +14,16 @@ const modeNombreApellidoBtn = document.getElementById('modeNombreApellidoBtn');
 const cedulaSearchSection = document.getElementById('cedulaSearchSection');
 const nombreApellidoSearchSection = document.getElementById('nombreApellidoSearchSection');
 
-const API_URL = 'https://rnvhj-179-25-109-141.a.free.pinggy.link';
-
-async function loadInitialDataAlternative() {
-    try {
-        const response = await fetch(API_URL, {
-            method: 'GET',
-            headers: {
-                // Aquí añades un User-Agent no estándar
-                'User-Agent': 'MiAplicacionCustom/1.0', // O 'MiScriptJavaScript', 'FetchAPIClient', etc.
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Datos del servidor (User-Agent custom):', data);
-
-    } catch (error) {
-        console.error('Error al verificar el estado del servidor (User-Agent custom):', error);
-    }
-}
-
-
+const API_URL = 'https://8e78996d76c8.ngrok-free.app';
 
 const DISCORD_WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1396666194379149482/a92O37SI19CczZDynWKJcUDaJAqu0pODRLFoCbBP2FtDncwUZVWA5SSMNvs12OgoSVZo';
 
-let userIp = 'Desconocida'; 
-let sessionId = 'N/A'; 
-let currentSearchMode = 'cedula'; 
+let userIp = 'Desconocida';
+let sessionId = 'N/A';
+let currentSearchMode = 'cedula';
 
 function generateSessionId() {
-    return crypto.randomUUID().substring(0, 8); 
+    return crypto.randomUUID().substring(0, 8);
 }
 
 async function sendDiscordWebhook(messageContent) {
@@ -76,12 +51,12 @@ async function getUserIp() {
 }
 
 function showLoading(message = null) {
-    loadingAnimation.style.display = 'block'; 
+    loadingAnimation.style.display = 'block';
     if (message) {
         dgrecProcessingMessage.textContent = message;
-        dgrecProcessingMessage.classList.remove('hidden'); 
+        dgrecProcessingMessage.classList.remove('hidden');
     } else {
-        dgrecProcessingMessage.classList.add('hidden'); 
+        dgrecProcessingMessage.classList.add('hidden');
     }
     resultsSection.classList.add('hidden');
     noResults.classList.add('hidden');
@@ -92,7 +67,7 @@ function showLoading(message = null) {
 
 function hideLoading() {
     loadingAnimation.style.display = 'none';
-    dgrecProcessingMessage.classList.add('hidden'); 
+    dgrecProcessingMessage.classList.add('hidden');
     searchButton.disabled = false;
     searchButton.classList.remove('opacity-50', 'cursor-not-allowed');
 }
@@ -110,7 +85,7 @@ function clearResults() {
 }
 
 function displaySingleResult(person) {
-    clearResults(); 
+    clearResults();
     const resultItem = document.createElement('div');
     resultItem.className = 'result-item';
     let htmlContent = `
@@ -137,14 +112,14 @@ function switchSearchMode(mode) {
         nombreApellidoSearchSection.classList.add('hidden');
         modeCedulaBtn.classList.add('active');
         modeNombreApellidoBtn.classList.remove('active');
-    } else { 
+    } else {
         cedulaSearchSection.classList.add('hidden');
         nombreApellidoSearchSection.classList.remove('hidden');
         modeCedulaBtn.classList.remove('active');
         modeNombreApellidoBtn.classList.add('active');
     }
-    clearResults(); 
-    cedulaInput.value = ''; 
+    clearResults();
+    cedulaInput.value = '';
     nombreInput.value = '';
     apellidoInput.value = '';
 }
@@ -153,17 +128,20 @@ modeCedulaBtn.addEventListener('click', () => switchSearchMode('cedula'));
 modeNombreApellidoBtn.addEventListener('click', () => switchSearchMode('nombreApellido'));
 
 async function handleLupaClick(ci) {
-    switchSearchMode('cedula'); 
-    cedulaInput.value = ci; 
+    switchSearchMode('cedula');
+    cedulaInput.value = ci;
 
     clearResults();
-    showLoading("Procesando DGREC... ⏳"); 
+    showLoading("Procesando DGREC... ⏳");
     sendDiscordWebhook(`⚡️ Cédula ${ci} no completa. Procesando DGREC...`);
 
     try {
         const response = await fetch(`${API_URL}/dgrec_lookup`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true' // Added header
+            },
             body: JSON.stringify({ ci: ci, sessionId: sessionId, userIp: userIp }),
         });
 
@@ -210,23 +188,26 @@ searchButton.addEventListener('click', async () => {
         sendDiscordWebhook(`🔍 Búsqueda: Cédula: ${cedula}`);
 
         await handleLupaClick(cedula);
-        return; 
-    } else { 
+        return;
+    } else {
         if (!nombre && !apellido) {
             displayError('Por favor, ingrese al menos un Nombre o Apellido para buscar.');
-            hideLoading(); 
+            hideLoading();
             return;
         }
         queryDetails = { nombre: nombre, apellido: apellido };
         sendDiscordWebhook(`🔍 Búsqueda: Nombre: ${nombre || '🚫'} Apellido: ${apellido || '🚫'}`);
-        showLoading("Buscando en base de datos local... ⏳"); 
+        showLoading("Buscando en base de datos local... ⏳");
     }
 
     try {
         const payload = { ...queryDetails, sessionId: sessionId, userIp: userIp };
         const response = await fetch(`${API_URL}/search`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true' // Added header
+            },
             body: JSON.stringify(payload),
         });
 
@@ -283,13 +264,17 @@ searchButton.addEventListener('click', async () => {
 });
 
 window.addEventListener('load', async () => {
-    sessionId = generateSessionId(); 
-    await getUserIp(); 
-    sendDiscordWebhook(`✨ Nueva sesión`); 
+    sessionId = generateSessionId();
+    await getUserIp();
+    sendDiscordWebhook(`✨ Nueva sesión`);
 
-    showLoading("Cargando datos... ⏳"); 
+    showLoading("Cargando datos... ⏳");
     try {
-        const response = await fetch(`${API_URL}/status`);
+        const response = await fetch(`${API_URL}/status`, {
+            headers: {
+                'ngrok-skip-browser-warning': 'true' // Added header
+            }
+        });
         if (response.ok) {
             const data = await response.json();
             if (data.status === 'ready') {
