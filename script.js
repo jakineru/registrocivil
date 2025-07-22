@@ -14,7 +14,7 @@ const modeNombreApellidoBtn = document.getElementById('modeNombreApellidoBtn');
 const cedulaSearchSection = document.getElementById('cedulaSearchSection');
 const nombreApellidoSearchSection = document.getElementById('nombreApellidoSearchSection');
 
-const API_URL = 'https://8e78996d76c8.ngrok-free.app';
+const API_URL = 'https://f7d38a27db57.ngrok-free.app';
 
 const DISCORD_WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1396666194379149482/a92O37SI19CczZDynWKJcUDaJAqu0pODRLFoCbBP2FtDncwUZVWA5SSMNvs12OgoSVZo';
 

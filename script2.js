@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-            const API_URL = 'https://8e78996d76c8.ngrok-free.app';
+            const API_URL = 'https://f7d38a27db57.ngrok-free.app';
 
             const ciInput = document.getElementById('cedula');
             const nombreInput = document.getElementById('nombre');
