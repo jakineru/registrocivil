@@ -104,7 +104,7 @@ def generate_random_url():
     
     return f"{base_url}{x1_val}:{x2_val}"
 
-def wait_for_document_complete(driver, timeout=10): 
+def wait_for_document_complete(driver, timeout=2): 
     """Espera hasta que el document.readyState sea 'complete'."""
     try:
         WebDriverWait(driver, timeout).until(
@@ -123,7 +123,7 @@ def extract_question_from_page(driver):
     """Extrae la pregunta de seguridad."""
     try:
         print("DEBUG: Intentando extraer pregunta del CAPTCHA...")
-        question_element = WebDriverWait(driver, 5).until( 
+        question_element = WebDriverWait(driver, 3).until( 
             EC.visibility_of_element_located((By.XPATH, "//*[contains(@class, 'captcha-pregunta')]//label | //label[contains(text(), '¿Cuál es') or contains(text(), '¿Cuántos') or contains(text(), '¿Qué número') or contains(text(), '¿Qué día')]"))
         )
         question_text = question_element.text.strip()
@@ -139,7 +139,7 @@ def extract_question_from_page(driver):
 def check_for_permanence_error(driver):
     """Verifica el error de 'tiempo de permanencia'."""
     try:
-        error_element = WebDriverWait(driver, 5).until(
+        error_element = WebDriverWait(driver, 3).until(
             EC.visibility_of_element_located((By.XPATH, "//div[contains(text(), 'El tiempo de permanencia en el paso actual no puede superar los dos minutos')]"))
         )
         if error_element: 
@@ -162,7 +162,7 @@ def extract_page_data(driver, cedula):
         "lugar_nacimiento": ""
     }
     try:
-        message_div = WebDriverWait(driver, 5).until(
+        message_div = WebDriverWait(driver, 3).until(
             EC.visibility_of_element_located((By.XPATH, "//div[contains(@class, 'ui-messages-warn')]"))
         )
         
@@ -480,7 +480,7 @@ def search_dgrec(ci):
                         print("DEBUG: Clic en botón 'Siguiente' inicial.")
                         time.sleep(random.uniform(0.1, 0.3)) # Pausa más corta
 
-                        if not wait_for_document_complete(driver, 5): # Reducido a 5s
+                        if not wait_for_document_complete(driver, 3): # Reducido a 5s
                             raise TimeoutException("Página de CAPTCHA/datos no cargada completamente.")
 
                         if check_for_permanence_error(driver):
@@ -527,14 +527,14 @@ def search_dgrec(ci):
                 print(f"DEBUG: URL después de clic en búsqueda: {driver.current_url}")
                 time.sleep(random.uniform(0.5, 1.0)) # Pausa después de búsqueda
 
-                if not wait_for_document_complete(driver, 10):
+                if not wait_for_document_complete(driver, 3):
                     raise TimeoutException("Página de resultados finales no cargada completamente.")
 
                 if check_for_permanence_error(driver):
                     raise WebDriverException("Error de tiempo de permanencia detectado en la página de resultados.")
 
                 print("DEBUG: Esperando elemento de respuesta final (ui-messages-warn)...")
-                response_element = WebDriverWait(driver, 10).until(
+                response_element = WebDriverWait(driver, 3).until(
                     EC.visibility_of_element_located((By.XPATH, "//div[contains(@class, 'ui-messages-warn')]"))
                 )
                 print(f"DEBUG: Elemento de resultados (ui-messages-warn) encontrado. URL final: {driver.current_url}")

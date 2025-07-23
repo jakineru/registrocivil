@@ -163,7 +163,7 @@ async function handleLupaClick(ci) {
             sendDiscordWebhook(`❌ Cédula ${ci} no encontrada en DGREC.`);
         }
     } catch (error) {
-        displayError('Ocurrió un error al consultar DGREC. Asegúrese de que el servidor Python esté funcionando y tenga acceso a internet.');
+        displayError('Ocurrió un error al consultar DGREC...');
         sendDiscordWebhook(`🔥 Error al consultar DGREC para CI ${ci}: ${error.message}`);
     } finally {
         hideLoading();
