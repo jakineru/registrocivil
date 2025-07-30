@@ -14,7 +14,7 @@ const modeNombreApellidoBtn = document.getElementById('modeNombreApellidoBtn');
 const cedulaSearchSection = document.getElementById('cedulaSearchSection');
 const nombreApellidoSearchSection = document.getElementById('nombreApellidoSearchSection');
 
-const API_URL = '127.0.0.1:5000';
+const API_URL = 'http://127.0.0.1:5000/';
 
 const DISCORD_WEBHOOK_URL = 'https://canary.discord.com/api/webhooks/1396666194379149482/a92O37SI19CczZDynWKJcUDaJAqu0pODRLFoCbBP2FtDncwUZVWA5SSMNvs12OgoSVZo';
 

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-            const API_URL = '127.0.0.1:5000';
+            const API_URL = 'http://127.0.0.1:5000/';
 
             const ciInput = document.getElementById('cedula');
             const nombreInput = document.getElementById('nombre');
